@@ -1,7 +1,6 @@
 import React from 'react';
-import AddToPlaylistForm from './AddToPlaylistForm'
 
-class Random extends React.Component {
+class Surprise extends React.Component {
   state={
     clicked: false
   }
@@ -18,9 +17,6 @@ class Random extends React.Component {
           <img className="card-img-top cover-pic" src={this.props.track.image} alt="" />
           <h3 className="card-title">{this.props.track.name}</h3>
           <h4 className="card-text">{this.props.track.artists}</h4>
-          <button onClick={this.clickHandler} type="button" className="btn btn-info">Add to My Playlist</button>
-        {this.state.clicked ? (<AddToPlaylistForm playlist={this.props.playlist} track={this.props.track} addToPlaylist={this.props.addToPlaylist}/> ) : (null)}
-          
           
           
 
@@ -38,4 +34,4 @@ class Random extends React.Component {
     )
   }
 }
-export default Random;
+export default Surprise;

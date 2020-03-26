@@ -11,6 +11,8 @@ class RandomTrack extends React.Component {
           <Random
             key={track.name}
             track={track}
+            addToPlaylist={this.props.addToPlaylist}
+            playlist={this.props.playlist}
             
           />
         ))}

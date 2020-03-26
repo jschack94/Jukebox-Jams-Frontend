@@ -18,12 +18,26 @@ const Sidebar = props => {
         <p className="menu-item">My Profile</p>
       </Link>
 
+      <Link to={"/playlist"} >
+        <p className="menu-item">My Playlists</p>
+      </Link>
+
+
+      <Link to={"/spotify"} >
+      <p className="menu-item">Connect to Spotify</p>
+    </Link>
+
       <Link to={"/popular"} >
-        <p className="menu-item">Top Hits</p>
+        <p className="menu-item">Top Tracks</p>
       </Link>
 
       <Link to={"/random"} >
-        <p className="menu-item">Random Songs</p>
+        <p className="menu-item">Random Tracks</p>
+      </Link>
+
+      
+      <Link to={"/surprise"} >
+        <p className="menu-item">Surprise Track</p>
       </Link>
 
       <Link to={"/home"} >

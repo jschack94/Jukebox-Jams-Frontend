@@ -10,27 +10,27 @@ import UserProfile from './Components/UserProfile';
 import Home from './Components/Home';
 import Loading from './Components/Loading'
 import FullContainer from './Containers/FullContainer';
-
-
-
+import Playlist from './Components/Playlist';
+import SurpriseTrack from './Components/SurpriseTrack';
 
 class App extends Component {
   _isMounted = false;
  
   state={
     topHits: [],
-    userList: [],
     random: [],
     isLoading: true,
     user: {},
+    playlist: [],
     login: false,
     searchedSongs: [],
     loading: false,
-    tracks: []
+    tracks: [],
+    playlistTracks: [],
+    surprise: []
     
     
   }
-
 
   componentDidMount(){
     this._isMounted = true;
@@ -79,15 +79,23 @@ class App extends Component {
         })
   }
 
-  getUserList(){
-    fetch('http://localhost:3000/api/v1/users')
-      .then(res=>res.json())
-      .then(data=> {
-        this.setState({
-          userList: data
-        })
+  getSurprise(){
+    //change address depending on port
+    fetch('http://localhost:3000/api/v1/tracks/surprise', {
+      headers: {
+        Authorization: localStorage.getItem("token")}
       })
+      .then(res=>res.json())
+      .then(data => {
+        if (this._isMounted) {
+          this.setState({
+            isLoading: false,
+            surprise: data
+          })
+        }
+        })
   }
+
 
   getTracks = () => {
     fetch('http://localhost:3000/api/v1/tracks', {
@@ -124,9 +132,37 @@ class App extends Component {
         this.getRandom()
         this.getTopHits()
         this.getTracks()
+        this.getSurprise()
+       
+
       
       })
   }
+
+  createNewPlaylist = (e, playlist) => {
+    e.preventDefault()
+    //console.log(playlist)
+    fetch(`http://localhost:3001/api/v1/users/${playlist.userId}/playlists`, {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json",
+       Accept: "application/json",
+       Authorization: localStorage.getItem("token")
+     },
+     body: JSON.stringify({
+       name: playlist.name,
+       user_id: playlist.userId
+     })})
+     .then(res => res.json())
+     .then(data => {
+       let playlist = [...this.state.playlist, data]
+       this.setState({
+         playlist
+       })
+     })
+     .then(alert(`${playlist.name} created!`))
+  }
+
 
 
     newUserSubmitHandler = (event, userInfo) => {
@@ -154,6 +190,8 @@ class App extends Component {
           this.getRandom()
           this.getTopHits()
           this.getTracks()
+          this.getSurprise()
+         
           
         })
 
@@ -184,10 +222,49 @@ class App extends Component {
         },
         body: JSON.stringify({
           name: userInfo.name,
-          username: userInfo.username
+          username: userInfo.username,
+          password: this.state.user.password
         })
       })
     }
+
+
+    submitPlaylistHandler= (e, playlistId, track, spotifyId) => {
+      e.preventDefault()
+      fetch(`http://localhost:3001/api/v1/playlist_tracks`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: localStorage.getItem("token")
+        },
+        body: JSON.stringify({
+          playlist_id: playlistId,
+          track_id: track.id,
+          spotify_id: spotifyId
+        })
+      }).then(res=>res.json())
+        .then(data=>{
+          let fullPlaylist = [...this.state.playlistTracks, data]
+          let newTrack = {
+            id: data.track_id,
+            name: track.name,
+            artists: track.artists,
+            image: track.image,
+            duration: track.duration,
+            popularity: track.popularity,
+            preview: track.preview,
+            spotify_id: track.spotify_id
+          }
+          this.setState({
+            playlistTracks: fullPlaylist,
+            tracks: [...this.state.tracks, newTrack]
+          })
+        }).then(alert(`${track.name} added!`))
+    }
+
+  
+  
 
     deleteUser = () => {
       let id = this.state.user.id
@@ -228,6 +305,20 @@ class App extends Component {
         />
       <Switch>
 
+      <Route
+        path="/playlist"
+        render={()=> (
+          <Playlist
+            userInfo={this.state.user}
+            createNewPlaylist={this.createNewPlaylist}
+            playlist={this.state.playlist}
+            removeSong={this.removeSong}
+            tracks={this.state.tracks}
+            
+          />
+        )} />
+
+
         <Route
           path="/popular"
           render={()=> (
@@ -235,6 +326,8 @@ class App extends Component {
             <Loading /> :
             <PopTrack
               topHits={this.state.topHits}
+              addToPlaylist={this.submitPlaylistHandler}
+              playlist={this.state.playlist}
               
               />
             )}
@@ -247,10 +340,24 @@ class App extends Component {
               <Loading /> :
               <RandomTrack
                 random={this.state.random}
+                addToPlaylist={this.submitPlaylistHandler}
+                playlist={this.state.playlist}
             
                 />
             )}
             />
+
+        <Route
+          path="/surprise"
+          render={()=> (
+            this.state.surprise.length === 0?
+              <Loading /> :
+              <SurpriseTrack
+                surprise={this.state.surprise}
+            
+                />
+            )}
+            />  
 
         <Route
           path="/profile"
@@ -290,21 +397,30 @@ class App extends Component {
               searchedSongs={this.state.searchedSongs}
               login={this.state.login}
               loading={this.state.loading}
+              addToPlaylist={this.submitPlaylistHandler}
+              playlist={this.state.playlist}
           
             />
           )}
           />
 
         <Route
+          path="/spotify"
+          component={FullContainer}
+          />
+
+
+        <Route
           path="/"
           component={Home}
           />
 
+       
+
       </Switch>
       
-      < FullContainer/>
      
-      </div>
+     </div>
     );
   }
 }
