@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class FullContainer extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ class FullContainer extends Component {
       albumName: "Album Name",
       playing: false,
       position: 0,
-      duration: 0,
+      duration: 0
     };
     this.playerCheckInterval = null;
   }
@@ -32,12 +32,12 @@ class FullContainer extends Component {
       const {
         current_track: currentTrack,
         position,
-        duration,
+        duration
       } = state.track_window;
       const trackName = currentTrack.name;
       const albumName = currentTrack.album.name;
       const artistName = currentTrack.artists
-        .map(artist => artist.name)
+        .map((artist) => artist.name)
         .join(", ");
       const playing = !state.paused;
       this.setState({
@@ -57,61 +57,69 @@ class FullContainer extends Component {
       method: "PUT",
       headers: {
         authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        "device_ids": [ deviceId ],
-        "play": true,
-      }),
+        device_ids: [deviceId],
+        play: true
+      })
     });
   }
 
   createEventHandlers() {
-    this.player.on('initialization_error', e => { console.error(e); });
-    this.player.on('authentication_error', e => {
+    this.player.on("initialization_error", (e) => {
+      console.error(e);
+    });
+    this.player.on("authentication_error", (e) => {
       console.error(e);
       this.setState({ loggedIn: false });
     });
-    this.player.on('account_error', e => { console.error(e); });
-    this.player.on('playback_error', e => { console.error(e); });
-  
+    this.player.on("account_error", (e) => {
+      console.error(e);
+    });
+    this.player.on("playback_error", (e) => {
+      console.error(e);
+    });
+
     // Playback status updates
-    this.player.on('player_state_changed', state => this.onStateChanged(state));
-  
+    this.player.on("player_state_changed", (state) =>
+      this.onStateChanged(state)
+    );
+
     // Ready
-    this.player.on('ready', async data => {
+    this.player.on("ready", async (data) => {
       let { device_id } = data;
       console.log("Let the music play on!");
       await this.setState({ deviceId: device_id });
       this.transferPlaybackHere();
     });
   }
-  
 
   onPrevClick() {
     this.player.previousTrack();
   }
-  
+
   onPlayClick() {
     this.player.togglePlay();
   }
-  
+
   onNextClick() {
     this.player.nextTrack();
   }
 
   checkForPlayer() {
     const { token } = this.state;
-  
-    if (window.Spotify !== null) {
 
+    if (window.Spotify !== null) {
       clearInterval(this.playerCheckInterval);
       this.player = new window.Spotify.Player({
-        name: "Matt's Spotify Player",
-        getOAuthToken: cb => { cb(token); },
+        name: "Jukebox Jams Spotify Player",
+        getOAuthToken: (cb) => {
+          cb(token);
+        }
       });
       this.createEventHandlers();
-  
+
       // finally, connect!
       this.player.connect();
     }
@@ -127,50 +135,52 @@ class FullContainer extends Component {
       error,
       position,
       duration,
-      playing,
+      playing
     } = this.state;
-  
+
     return (
       <div className="App">
-       
-          <h2>Now Playing</h2>
-          
-        
-  
+        <h2>Now Playing</h2>
+
         {error && <p>Error: {error}</p>}
-  
-        {loggedIn ?
-        (<div>
-          <p>Artist: {artistName}</p>
-          <p>Track: {trackName}</p>
-          <p>Album: {albumName}</p>
-          <p>
-          <button onClick={() => this.onPrevClick()}>Previous</button>
-<button onClick={() => this.onPlayClick()}>{playing ? "Pause" : "Play"}</button>
-<button onClick={() => this.onNextClick()}>Next</button>
-</p>
-        </div>)
-        :
-        (<div>
-          <p className="App-intro">
-            Enter your Spotify access token. Get it from{" "}
-            <a href="https://beta.developer.spotify.com/documentation/web-playback-sdk/quick-start/#authenticating-with-spotify">
-              here
-            </a>.
-          </p>
-          <p>
-            <input type="text" value={token} onChange={e => this.setState({ token: e.target.value })} />
-          </p>
-          <p>
-            <button onClick={() => this.handleLogin()}>Go</button>
-          </p>
-        </div>)
-        }
+
+        {loggedIn ? (
+          <div>
+            <p>Artist: {artistName}</p>
+            <p>Track: {trackName}</p>
+            <p>Album: {albumName}</p>
+            <p>
+              <button onClick={() => this.onPrevClick()}>Previous</button>
+              <button onClick={() => this.onPlayClick()}>
+                {playing ? "Pause" : "Play"}
+              </button>
+              <button onClick={() => this.onNextClick()}>Next</button>
+            </p>
+          </div>
+        ) : (
+          <div>
+            <p className="App-intro">
+              Enter your Spotify access token. Get it from{" "}
+              <a href="https://beta.developer.spotify.com/documentation/web-playback-sdk/quick-start/#authenticating-with-spotify">
+                here
+              </a>
+              .
+            </p>
+            <p>
+              <input
+                type="text"
+                value={token}
+                onChange={(e) => this.setState({ token: e.target.value })}
+              />
+            </p>
+            <p>
+              <button onClick={() => this.handleLogin()}>Go</button>
+            </p>
+          </div>
+        )}
       </div>
     );
   }
 }
-
-
 
 export default FullContainer;
