@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./App.css";
 import { Route, Switch, withRouter } from "react-router-dom";
 import Sidebar from "./Components/Sidebar";
 import NewUserForm from "./Components/NewUserForm";
@@ -12,32 +11,20 @@ import Loading from "./Components/Loading";
 import FullContainer from "./Containers/FullContainer";
 import Playlist from "./Components/Playlist";
 import SurpriseTrack from "./Components/SurpriseTrack";
+import About from "./Components/About";
+
+import "./App.css";
 
 class App extends Component {
   _isMounted = false;
 
-  state = {
-    topHits: [],
-    random: [],
-    isLoading: true,
-    user: {},
-    playlist: [],
-    login: false,
-    searchedSongs: [],
-    loading: false,
-    playlistTracks: [],
-    surprise: []
-  };
+  
 
   componentDidMount() {
     this._isMounted = true;
     if (this._isMounted) {
       this.setState({ isLoading: false });
     }
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
   }
 
   getTopHits() {
@@ -120,6 +107,7 @@ class App extends Component {
       });
   };
 
+  //STILL NEEDS WORK
   createNewPlaylist = (e, playlist) => {
     e.preventDefault();
     //console.log(playlist)
@@ -167,6 +155,7 @@ class App extends Component {
           user: data.user,
           login: true
         });
+
         this.props.history.push("/home");
         this.getRandom();
         this.getTopHits();
@@ -191,15 +180,21 @@ class App extends Component {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
-        Authorization: localStorage.getItem("token")
+        Accept: "application/json"
       },
       body: JSON.stringify({
         name: userInfo.name,
         username: userInfo.username,
         password: this.state.user.password
       })
-    });
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({
+          user: data.user
+        });
+        console.log(data.user);
+      });
   };
 
   submitPlaylistHandler = (e, playlistId, track, spotifyId) => {
@@ -365,6 +360,8 @@ class App extends Component {
               />
             )}
           />
+
+          <Route path="/aboutme" component={About} />
 
           <Route path="/spotify" component={FullContainer} />
 

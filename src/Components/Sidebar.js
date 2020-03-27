@@ -14,10 +14,7 @@ const Sidebar = props => {
         <p className="menu-item">Home</p>
       </Link>
 
-      <Link to={"/profile"} >
-        <p className="menu-item">My Profile</p>
-      </Link>
-
+    
       <Link to={"/playlist"} >
         <p className="menu-item">My Playlists</p>
       </Link>
@@ -39,6 +36,16 @@ const Sidebar = props => {
       <Link to={"/surprise"} >
         <p className="menu-item">Surprise Track</p>
       </Link>
+
+      <Link to={"/aboutme"} >
+        <p className="menu-item">About Me</p>
+      </Link>
+
+      <Link to={"/profile"} >
+        <p className="menu-item">My Profile</p>
+      </Link>
+
+
 
       <Link to={"/home"} >
       <p className="menu-item" onClick={props.logout}>Logout</p>
