@@ -18,7 +18,18 @@ import "./App.css";
 class App extends Component {
   _isMounted = false;
 
-  
+  state = {
+    topHits: [],
+    random: [],
+    isLoading: true,
+    user: {},
+    playlist: [],
+    login: false,
+    searchedSongs: [],
+    loading: false,
+    playlistTracks: [],
+    surprise: []
+  };
 
   componentDidMount() {
     this._isMounted = true;
