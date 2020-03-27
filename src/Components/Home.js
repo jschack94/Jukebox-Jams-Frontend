@@ -16,7 +16,7 @@ class Home extends React.Component{
         <div className="container">
         <h2>Search For Your Favorite Song:</h2>
         <Search fetchSearchedSongs={this.props.fetchSearchedSongs} />
-        {this.props.searchedSongs.length === 0 && this.props.loading ? (<Loading />) :
+        {this.props.loading ? (<Loading />) :
         this.props.searchedSongs.map((track, i) => (
           <SearchedSongs
             key={i}
