@@ -8,7 +8,7 @@ class SurpriseTrack extends React.Component {
 
     return(
       <div className="container">
-      <h1>Surprise Song!</h1>
+      <h1>Surprise Track</h1>
         {this.props.surprise.map(track => (
           <Surprise
             key={track.name}

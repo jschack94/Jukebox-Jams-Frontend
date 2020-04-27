@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'reactstrap';
 
-class AddToPlaylist extends React.Component {
+class AddToPlaylistForm extends React.Component {
 
   state = {
     selectedFilter: "",
@@ -31,4 +31,4 @@ class AddToPlaylist extends React.Component {
     )
   }
 }
-export default AddToPlaylist;
+export default AddToPlaylistForm;

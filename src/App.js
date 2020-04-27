@@ -8,8 +8,9 @@ import RandomTrack from "./Components/RandomTrack";
 import UserProfile from "./Components/UserProfile";
 import Home from "./Components/Home";
 import Loading from "./Components/Loading";
-import FullContainer from "./Containers/FullContainer";
-import Playlist from "./Components/Playlist";
+import FullContainer from "./Components/FullContainer";
+import SpotifyPlayer from "./Containers/SpotifyPlayer";
+
 import SurpriseTrack from "./Components/SurpriseTrack";
 import About from "./Components/About";
 
@@ -276,18 +277,7 @@ class App extends Component {
       <div className="App">
         <Sidebar login={this.state.login} logout={this.logout} />
         <Switch>
-          <Route
-            path="/playlist"
-            render={() => (
-              <Playlist
-                userInfo={this.state.user}
-                createNewPlaylist={this.createNewPlaylist}
-                playlist={this.state.playlist}
-                removeSong={this.removeSong}
-                tracks={this.state.tracks}
-              />
-            )}
-          />
+          
 
           <Route
             path="/popular"
@@ -375,6 +365,8 @@ class App extends Component {
           <Route path="/aboutme" component={About} />
 
           <Route path="/spotify" component={FullContainer} />
+
+          <Route path="/spotifyplayer" component={SpotifyPlayer} />
 
           <Route path="/" component={Home} />
         </Switch>

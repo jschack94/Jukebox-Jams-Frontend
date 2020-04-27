@@ -15,14 +15,16 @@ const Sidebar = props => {
       </Link>
 
     
-      <Link to={"/playlist"} >
-        <p className="menu-item">My Playlists</p>
-      </Link>
-
+     
 
       <Link to={"/spotify"} >
-      <p className="menu-item">Connect to Spotify</p>
+      <p className="menu-item">Create a Party Playlist</p>
     </Link>
+
+    <Link to={"/spotifyplayer"} >
+      <p className="menu-item">Turn up the Tunes</p>
+    </Link>
+
 
       <Link to={"/popular"} >
         <p className="menu-item">Top Tracks</p>
@@ -37,12 +39,15 @@ const Sidebar = props => {
         <p className="menu-item">Surprise Track</p>
       </Link>
 
-      <Link to={"/aboutme"} >
-        <p className="menu-item">About Me</p>
-      </Link>
+      
 
       <Link to={"/profile"} >
         <p className="menu-item">My Profile</p>
+      </Link>
+
+
+      <Link to={"/aboutme"} >
+        <p className="menu-item">About Jukebox</p>
       </Link>
 
 

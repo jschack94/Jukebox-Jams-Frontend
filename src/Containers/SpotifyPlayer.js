@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class FullContainer extends Component {
+class SpotifyPlaer extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -183,4 +183,4 @@ class FullContainer extends Component {
   }
 }
 
-export default FullContainer;
+export default SpotifyPlaer;

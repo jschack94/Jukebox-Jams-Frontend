@@ -3,19 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/spotify-web-playback-sdk": "^0.1.6",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.0",
     "popper.js": "^1.14.6",
+    "query-string": "^5.0.0",
     "react": "^16.7.0",
     "react-bootstrap": "^1.0.0-beta.6",
     "react-bootstrap-sidebar": "^0.0.1",
     "react-burger-menu": "^2.6.1",
-    "@types/spotify-web-playback-sdk": "^0.1.6",
     "react-dom": "^16.7.0",
     "react-loading": "^2.0.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.3",
     "react-spotify-api": "^2.6.0",
+   
     "reactstrap": "^7.1.0"
   },
   "scripts": {

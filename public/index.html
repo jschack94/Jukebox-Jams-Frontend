@@ -32,6 +32,50 @@
     <title>Jukebox Jams</title>
   </head>
   <body>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        const token = 'BQCHVc3mceQNm_u9algF4TSnawtSIIUfxEJaYXP5UK5lWeiPh5RzolaugfqbCil6YJnNQk8LrNAmqKCq46aDKDO56c4WH-tSm871ahL6qup56IMBixE0L125sTvK55UXVgRuPae6fdxx0AqQjkAuMc3aE63De5wi7fA';
+        const player = new Spotify.Player({
+          name: 'Web Playback SDK Quick Start Player',
+          getOAuthToken: cb => { cb(token); }
+        });
+  
+        // Error handling
+        player.addListener('initialization_error', ({ message }) => { console.error(message); });
+        player.addListener('authentication_error', ({ message }) => { console.error(message); });
+        player.addListener('account_error', ({ message }) => { console.error(message); });
+        player.addListener('playback_error', ({ message }) => { console.error(message); });
+  
+        // Playback status updates
+        player.addListener('player_state_changed', state => { console.log(state); });
+  
+        // Ready
+        player.addListener('ready', ({ device_id }) => {
+          console.log('Ready with Device ID', device_id);
+        });
+  
+        // Not Ready
+        player.addListener('not_ready', ({ device_id }) => {
+          console.log('Device ID has gone offline', device_id);
+        });
+  
+        // Connect to the player!
+        player.connect();
+
+        	
+player.pause().then(() => {
+  console.log('Paused!');
+});
+
+	
+player.previousTrack().then(() => {
+  console.log('Set to previous track!');
+});
+        	
+
+      };
+    </script>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--
@@ -43,13 +87,7 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 
-    <script src="https://sdk.scdn.co/spotify-player.js"></script>
-  <script>
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      window.Spotify = Spotify;
-    }
-  </script>
-
+  
 
 
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
@@ -70,10 +108,7 @@
   <br> </br>
   <footer>
 
-    <div class="footer">
-      <h1 style="font-size:20px; bottom: center; margin-: -200px;">Made by: Jonathan Schack</h1>
-    </div>
-    
+  
 
   </footer>
 </html>
