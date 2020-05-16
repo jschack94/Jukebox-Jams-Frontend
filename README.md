@@ -6,11 +6,11 @@ View the Back End Repository Here:https://github.com/jschack94/finalbackendjuke
 
 Current Features <p>
 A user can...<p>
-A user can...
-A user can...
-A user can...
-A user can...
-A user can...
+A user can...<p>
+A user can...<p>
+A user can...<p>
+A user can...<p>
+A user can...<p>
 
 Demo
 View Demo on YouTube Here:
