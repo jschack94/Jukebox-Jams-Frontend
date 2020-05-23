@@ -2,6 +2,8 @@ Jukebox Jams
 
 <strong> Jukebox Jams </strong> <p>
 
+<strong> Backend repo here: </strong> https://github.com/jschack94/Module-4-Rails-Backend-Jukebox-Jams
+
 Jukebox Jams is a... <p>
 
 
@@ -12,7 +14,6 @@ A user can...<p>
 A user can...<p>
 A user can...<p>
   
-
 <strong> Problems Solved: </strong> <p>
   
 <strong> Tools Used: </strong> <p>
