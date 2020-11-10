@@ -5,7 +5,7 @@
   "dependencies": {
     "@types/spotify-web-playback-sdk": "^0.1.6",
     "bootstrap": "^4.3.1",
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "popper.js": "^1.14.6",
     "query-string": "^5.0.0",
     "react": "^16.7.0",
